@@ -16,10 +16,7 @@ from configs.config import CFG
 
 def main():
   df = generate_csv('dataloader/data/archive/**/**/*.png')
-  print(df.head())
   df_train, df_test = split_data(df)
-  print(df_train.head())
-  
   train, val, test = get_generators(df_train, df_test)
 
   STEP_SIZE_TRAIN=train.n//train.batch_size
