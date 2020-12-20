@@ -11,11 +11,11 @@ Effcient-net model with histo dataset using tensorflow
 
 ### Performance Results
 
-#####Training
-![alt text]('plots/effnet_epochs.png')
+##### Training
+![epochs plot](plots/effnet_epochs.png)
 
 ##### Learning Curve
-![alt text]('eff-net-lr_curve.png')
+![learning curve plot](eff-net-lr_curve.png)
 
 
 ### Package Structure
