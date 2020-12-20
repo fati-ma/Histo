@@ -1,7 +1,24 @@
-# Histo
-This is a classifier that automates the detection of invasive ductal carcinoma
+# Efficient-Net
+Effcient-net model with histo dataset using tensorflow
 
-# Package Structure
+### Hyperparameters
+   * epochs: 5
+   * input shape: (96, 96, 3)
+   * batch size: 32,
+   * learning rate: 1e-2
+   * Data Augmentation: 
+     * rescale
+
+### Performance Results
+
+#####Training
+![alt text]('plots/effnet_epochs.png')
+
+##### Learning Curve
+![alt text]('eff-net-lr_curve.png')
+
+
+### Package Structure
 
 1) **configs:** in configs we define every single thing that can be configurable and can be changed in the future. Good examples are training hyperparameters, folder paths, the model architecture, metrics, flags.
 
