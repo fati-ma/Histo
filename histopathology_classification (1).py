@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/15KRCkgkUy2BjUU-U0rLPUwYxRHqcSVTb
 """
 
+#Some of the segments in this code are highly dependant on extenral resources in order to establish a rough structure. These will be ammended through the following weeks.
 from skimage import io, color, exposure, transform
 from skimage import filters, util
 import matplotlib.pyplot as plt
