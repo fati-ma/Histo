@@ -1,3 +1,4 @@
 *.vscode
+*.model
 dataloader/data/
 __pycache__/
