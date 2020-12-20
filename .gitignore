@@ -1,0 +1,3 @@
+*.vscode
+dataloader/data/
+__pycache__/
