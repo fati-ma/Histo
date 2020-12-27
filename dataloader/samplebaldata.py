@@ -1,8 +1,8 @@
 import pandas as pd
 
 def SampleBalData(data_frame,data_size):
-    if data_size > 78786:
-        raise ValueError("maximum possible balanced data_size = 78786")
+    if data_size > 157572:
+        raise ValueError("maximum possible balanced data_size = 157572")
         
     half_data = int (data_size / 2)   
     
