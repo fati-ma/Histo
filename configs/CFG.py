@@ -1,5 +1,6 @@
 base_path="IDC_regular_ps50_idx5/part1"
 data_size= 157570
+Augm_size= 78786
 train_size= 0.7
 val_size= 0.15
 test_size= 0.15
