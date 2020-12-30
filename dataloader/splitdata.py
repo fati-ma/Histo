@@ -24,16 +24,16 @@ def SaplitData(data_frame,train_size,val_size,test_size):
     train_df = pd.concat([train_pos,train_neg])
     train_df = train_df.sample(frac=1).reset_index(drop=True)
     X_train=np.array(train_df.image)
-    Y_train=np.array(train_df.target)
+    y_train=np.array(train_df.target)
     
     val_df = pd.concat([val_pos,val_neg])
     val_df = val_df.sample(frac=1).reset_index(drop=True)
     X_val=np.array(val_df.image)
-    Y_val=np.array(val_df.target)
+    y_val=np.array(val_df.target)
     
     test_df = pd.concat([test_pos,test_neg])
     test_df = test_df.sample(frac=1).reset_index(drop=True)
     X_test=np.array(test_df.image)
-    Y_test=np.array(test_df.target)
+    y_test=np.array(test_df.target)
 
-    return X_train, Y_train, X_val, Y_val, X_test, Y_test
+    return X_train, y_train, X_val, y_val, X_test, y_test
