@@ -2,3 +2,4 @@
 *.model
 dataloader/data/
 __pycache__/
+logs
