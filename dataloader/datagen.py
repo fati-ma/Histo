@@ -11,15 +11,15 @@ BATCH_SIZE = CFG['batch_size']
 EPOCHS = CFG['epochs']
 
 def get_generators(df_train, df_test):
-  train_generator = ImageDataGenerator(rescale = 1/255.0, validation_split=0.2)
-  test_generator = ImageDataGenerator(rescale = 1/255.0)
+  train_generator = ImageDataGenerator(**CFG['training_aug'])
+  test_generator = ImageDataGenerator(**CFG['test_aug'])
 
   train = train_generator.flow_from_dataframe(
       df_train, 
       x_col = 'id',
       y_col = 'label',
       target_size=(SHAPE[0], SHAPE[1]),
-      class_mode = 'categorical',
+      class_mode = 'binary',
       shuffle=True,
       seed = 42,
       subset="training",
@@ -31,8 +31,8 @@ def get_generators(df_train, df_test):
       x_col = 'id',
       y_col = 'label',
       target_size=(SHAPE[0], SHAPE[1]),
-      class_mode = 'categorical',
-      shuffle=True,
+      class_mode = 'binary',
+      shuffle=False,
       seed = 42,
       subset="validation",
       batch_size = BATCH_SIZE
@@ -43,10 +43,10 @@ def get_generators(df_train, df_test):
       x_col = 'id',
       y_col = 'label',
       target_size=(SHAPE[0], SHAPE[1]),
-      class_mode = 'categorical',
+      class_mode = 'binary',
       shuffle=False,
       seed = 42,
-      batch_size = 1
+      batch_size = BATCH_SIZE
   )
 
   return train, val, test

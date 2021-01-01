@@ -16,14 +16,15 @@ from configs.config import CFG
 
 import gc
 
-def efficientNet(num_classes, img_size):
+def efficientNet(num_classes, img_size, optimizer, lr, fine_tune=False):
     inputs = layers.Input(shape=img_size)
     model = EfficientNetB0(include_top=False, input_tensor=inputs, weights="imagenet")
 
-    # unfreeze the pretrained weights
-    for layer in model.layers[-20:]:
-        if not isinstance(layer, layers.BatchNormalization):
-            layer.trainable = True
+    if(fine_tune):
+        # unfreeze the pretrained weights
+        for layer in model.layers[-20:]:
+            if not isinstance(layer, layers.BatchNormalization):
+                layer.trainable = True
 
     # Rebuild top
     x = layers.GlobalAveragePooling2D(name="avg_pool")(model.output)
@@ -31,11 +32,16 @@ def efficientNet(num_classes, img_size):
 
     top_dropout_rate = 0.2
     x = layers.Dropout(top_dropout_rate, name="top_dropout")(x)
-    outputs = layers.Dense(num_classes, activation="softmax", name="pred")(x)
+    outputs = layers.Dense(num_classes, activation="sigmoid", name="pred")(x)
 
     # Compile
     model = tf.keras.Model(inputs, outputs, name="EfficientNet")
-    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-2)
+    
+    if(optimizer == 'Adam'):
+        optimizer = tf.keras.optimizers.Adam(learning_rate=lr)
+    elif(optimizer == 'RMSprop'):
+        optimizer = tf.keras.optimizers.RMSprop(learning_rate=lr)
+    
     model.compile(
         optimizer=optimizer, loss="binary_crossentropy", metrics=["accuracy"]
     )
