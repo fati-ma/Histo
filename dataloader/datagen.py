@@ -10,7 +10,29 @@ SHAPE = CFG['shape']
 BATCH_SIZE = CFG['batch_size']
 EPOCHS = CFG['epochs']
 
-def get_generators(df_train, df_test):
+
+def get_generators_array(trainX, trainY, testX, testY):
+    train_generator = ImageDataGenerator(**CFG['training_aug'])
+    test_generator = ImageDataGenerator(**CFG['test_aug'])
+    
+    train = train_generator.flow(
+        trainX,
+        trainY,
+        batch_size = BATCH_SIZE,
+        seed = 42,
+        shuffle=True
+    )
+    
+    test = test_generator.flow(
+        testX,
+        testY,
+        seed = 42
+    )
+    
+    return train, test
+
+
+def get_generators_df(df_train, df_test):
   train_generator = ImageDataGenerator(**CFG['training_aug'])
   test_generator = ImageDataGenerator(**CFG['test_aug'])
 
@@ -32,7 +54,7 @@ def get_generators(df_train, df_test):
       y_col = 'label',
       target_size=(SHAPE[0], SHAPE[1]),
       class_mode = 'binary',
-      shuffle=False,
+      #shuffle=False,
       seed = 42,
       subset="validation",
       batch_size = BATCH_SIZE
@@ -44,7 +66,7 @@ def get_generators(df_train, df_test):
       y_col = 'label',
       target_size=(SHAPE[0], SHAPE[1]),
       class_mode = 'binary',
-      shuffle=False,
+      #shuffle=False,
       seed = 42,
       batch_size = BATCH_SIZE
   )

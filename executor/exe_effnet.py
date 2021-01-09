@@ -15,7 +15,7 @@ from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import TensorBoard
 
-from dataloader.datagen import get_generators
+from dataloader.datagen import get_generators_df, get_generators_array
 from utils.utils import *
 from models.effecientnet import efficientNet
 from configs.config import CFG
@@ -25,9 +25,8 @@ from optimization import optimize
 import warnings
 warnings.filterwarnings('ignore')
 
-@optimize(5)
+@optimize(1)
 def run_model(params, save_model = False):
-  train, val, test = get_generators(df_train, df_test)
 
   STEP_SIZE_TRAIN=train.n//train.batch_size
   STEP_SIZE_VALID=val.n//val.batch_size
@@ -40,7 +39,7 @@ def run_model(params, save_model = False):
   reduce_lr = ReduceLROnPlateau(monitor='loss', factor=0.25, patience=2, 
                                       verbose=1, mode='auto', min_lr=0.00001)
 
-  early_stop = EarlyStopping(monitor='val_loss', patience=3, 
+  early_stop = EarlyStopping(monitor='val_loss', patience=2, 
                                         verbose=1, mode='min')
   
   model = efficientNet(1, params['shape'], params['optimizer'], 
@@ -55,20 +54,22 @@ def run_model(params, save_model = False):
         callbacks=[early_stop, reduce_lr, tensorboard]
   )
   
+  # try:
+  #   model.predict_generator(test, callbacks=[tensorboard])
+  # except:
+  #   print("[Error]: Unable to perform prediction on testset")
+  
   if(save_model):
     print("[INFO] saving model...")
     model.save("efficientNet-{}.model".format(t), save_format="h5")
   
-  plot_learning_curve(H, CFG['epochs'])
+  plot_learning_curve(H, CFG['epochs'], f'efficient_net_{t}.jpg')
 
-  
-def main():
-  pass
-  
+
 if __name__=='__main__':
-  df = generate_csv('dataloader/data/archive/**/**/*.png')
+  df = generate_csv('dataloader/data/archive/**/**/*.png',  downsample = True)
   df_train, df_test = split_data(df)
-  train, val, test = get_generators(df_train, df_test)
+  train, val, test = get_generators_df(df_train, df_test)
   
   loss = run_model()
   
