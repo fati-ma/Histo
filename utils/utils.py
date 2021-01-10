@@ -1,4 +1,4 @@
-import glob
+import glob2
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,7 +21,7 @@ def split_data(df):
 def generate_csv(path, downsample = False):
     
     print('[INFO]::Generating images dataframe...')
-    images = glob.glob(path)
+    images = glob2.glob(path)
     df = pd.DataFrame({'id': images})
     df['label'] = 0
     df['label'] = df['id'].apply(lambda x: x.split('/')[3])
