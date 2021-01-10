@@ -24,7 +24,7 @@ def generate_csv(path, downsample = False):
     images = glob2.glob(path)
     df = pd.DataFrame({'id': images})
     df['label'] = 0
-    df['label'] = df['id'].apply(lambda x: x.split('/')[3])
+    df['label'] = df['id'].apply(lambda x: x.split('\\' or '/')[2])
     if(downsample):
         df_positive = df[df['label'] == '1']
         df_negative = df[df['label'] == '0']
