@@ -24,6 +24,7 @@ def vgg16net(num_classes, img_size, optimizer, lr, fine_tune=False):
         layers.Dense(num_classes, activation="sigmoid", name="pred")
 
     ])
+    model.layers[0].trainable = False
 
 
     #if(fine_tune):
