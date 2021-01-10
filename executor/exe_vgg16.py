@@ -41,7 +41,7 @@ def run_model(params, save_model = False):
     early_stop = EarlyStopping(monitor='val_loss', patience=2,
                                verbose=1, mode='min')
 
-    model = vgg16net(1, params['shape'], params['optimizer'],
+    model = vgg16net(2, params['shape'], params['optimizer'],
                      params['learning_rate'], params['fine-tune'])
 
     H = model.fit(
