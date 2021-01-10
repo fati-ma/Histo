@@ -20,7 +20,7 @@ from utils.utils import *
 from models.vgg16net import vgg16net
 from configs.config import CFG
 
-from optimization import optimize
+from executor.optimization import optimize
 
 import warnings
 warnings.filterwarnings('ignore')
